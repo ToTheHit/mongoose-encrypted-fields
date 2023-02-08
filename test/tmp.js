@@ -18,7 +18,7 @@ const main = async () => {
 
     const TmpSchema = new Schema({
         test: {
-            type: Number,
+            type: String,
             encrypted: true
         }
     }, { _id: false, id: false });
@@ -36,7 +36,7 @@ const main = async () => {
         }
     }, { _id: false });
 
-    const BlogSchmea = new Schema({
+    const BlogSchema = new Schema({
         title: {
             type: String,
             encrypted: true
@@ -62,7 +62,7 @@ const main = async () => {
     const SECRET =
         '12343ae4b2d178b3f00441788bcabb7d268c1c87c0139d233cb6e8d3be12866177420f0ea6c071a302d05f0599991a4ae8312673c3b824edf8b53ad5cd4f25111b0f4e1ecef74aee491d245f3dbc671d7e0413b3b3e710dac7d7b3ee9f0ea0c0';
 
-    BlogSchmea.plugin(EncryptedFieldsPlugin, {
+    BlogSchema.plugin(EncryptedFieldsPlugin, {
         encryptionSecret: Buffer.from(SECRET, 'hex'),
         encryptionKey: 'encryption_key',
         keyVaultNamespace: {
@@ -72,39 +72,26 @@ const main = async () => {
         enableAutoEncryptionForFindOperations: true
     });
 
-    const Blog = mongoose.model('blogs', BlogSchmea);
+    const Blog = mongoose.model('blogs', BlogSchema);
 
-    const blogInstance = new Blog({
-        // title: 'Иванов',
-        // body: 'иванов',
-        // date: new Date(),
-        // author: [{
-        //     firstName: 'Тестовый',
-        //     lastName: 'Тест'
-        // }],
-        trash: ['какой-то тест']
-        // trash: [123]
-    });
+    // const blogInstance = new Blog({
+    //     title: 'Иванов #2',
+    //     body: 'иванов #2',
+    //     // date: new Date(),
+    //     author: [{
+    //         firstName: 'Тестовый #2',
+    //         lastName: 'Тест #2'
+    //     }]
+    // //     // trash: ['какой-то тест']
+    // //     // trash: [123]
+    // });
 
     // await Blog.findOne({
     //     title: 'Иванов'
     // });
-    await blogInstance.save();
+    // await blogInstance.save();
 
-    // const blogInstance1 = new Blog({
-    //     title: 'Иванов',
-    //     body: 'иванов',
-    //     date: new Date(),
-    //     author: {
-    //         firstName: 'Тестовый',
-    //         lastName: 'Тест'
-    //     }
-    // });
-    //
-    // // await Blog.findOne({
-    // //     title: 'Иванов'
-    // // });
-    // await blogInstance1.save();
+    const t = await Blog.findOne().lean();
 };
 
 main();
