@@ -12,9 +12,6 @@ const AuthorSchema = new Schema({
     lastName: {
         type: String,
         encrypted: true
-    },
-    tmp: {
-        type: TmpSchema
     }
 }, { _id: false });
 
